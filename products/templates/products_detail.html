@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load account %}
+{% load socialaccount %}
+{% block content %}
+<h1>Product Detail</h1>
+
+
+    <ul><h1>
+        <a href="{%url 'user-posts' pd.username }">{{pd.username}}</a>
+        Product: {{pd.name}}</h1></ul>
+    <ul><h1> weight: {{pd.weight}}</h1></ul>
+   <ul><h1>stock:{{pd.stock}}</h1></ul>
+
+{% endblock content %}

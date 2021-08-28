@@ -1,8 +1,12 @@
 from django.db import models
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
+
+from django.urls import reverse
+
+
 class Products(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name= models.CharField(max_length=50)
     weight= models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     price=  models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
@@ -21,4 +25,4 @@ class Products(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'pk': self.pk})
+        return reverse('product-detail', kwargs={'pk': self.pk})

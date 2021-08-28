@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
 
 ]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -97,10 +98,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 DATABASES = {
-    'default': {},
-    'products': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'products.sqlite3',
+        'NAME': 'default.sqlite3',
+    },
+    'users_db': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'users_db.sqlite3',
     },
 
 }
@@ -140,6 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# LOGIN_REDIRECT_URL = ''
-LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = ''
+LOGIN_URL = 'account_login'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

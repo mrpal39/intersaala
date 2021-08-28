@@ -17,6 +17,7 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     
 )
+from .models import students
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -34,6 +35,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from rest_framework import serializers
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -146,7 +148,7 @@ def PasswordResetView(request):
 def logout_request(request):
     logout(request)
     # Redirect back to index page.
-    return HttpResponseRedirect('/')
+    return HttpResponse('you are now log out')
     # form=log
 @csrf_exempt
 def login_request(request):
@@ -167,7 +169,7 @@ def login_request(request):
                 return HttpResponse("You're account is disabled.")
         else:
 
-            return HttpResponse(' an inv/alid login error message.')
+            return HttpResponse(' an invalid login error message.')
             # return render (request ,'login.html', {'form':form})
     form = AuthenticationForm()
     return render(request=request,

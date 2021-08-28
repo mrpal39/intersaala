@@ -6,13 +6,13 @@
 {% block content %}
 
 <div class="container-fluid col-5">
-<form action="{% url 'ProductCreateView' %}" method="post"></form>
+<form  method="post">
+    {% csrf_token %}
     {{form|crispy}}
 
+    <input type="submit" value="Save">
 
-<a href="">
-    <button type="submit">submit</button>
-</a>
+</form>
 </div>
 
 
