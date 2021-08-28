@@ -11,6 +11,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from django.utils import timezone
 from .models import Products
 
 class ProductCreateView(LoginRequiredMixin,CreateView):
@@ -23,13 +24,17 @@ class ProductCreateView(LoginRequiredMixin,CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class Product_list(LoginRequiredMixin,ListView):
+class Product_list(ListView):
     model = Products
     template_name = 'homepage.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'item'
     ordering = ['-name']
     paginate_by = 5
-    paginate_orphans = 0
+    paginate_orphans =100
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
 
 class PostDetailView(DetailView):
 
@@ -44,9 +49,10 @@ class PostDetailView(DetailView):
 
 class UserProductList(ListView):
     model = Products
-    template_name='userproduct.html'
+    template_name='userlistpost.html'
     context_object_name='userlist'
-    paginate_by=-5
+    paginate_by=5
+    
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))

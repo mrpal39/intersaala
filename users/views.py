@@ -143,13 +143,12 @@ def PasswordResetView(request):
     
 
     return render(request, 'password_reset.html',{'form': form})
-
+# 
 
 def logout_request(request):
     logout(request)
-    # Redirect back to index page.
-    return HttpResponse('you are now log out')
-    # form=log
+    return HttpResponseRedirect('/')
+    
 @csrf_exempt
 def login_request(request):
     form = AuthenticationForm(request=request, data=request.POST)

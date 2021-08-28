@@ -6,13 +6,11 @@ from django.utils import timezone
 from PIL import Image
 
 from django.urls import reverse
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
     email = models.EmailField(max_length=150)
     signup_confirmation = models.BooleanField(default=False)
 

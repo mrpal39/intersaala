@@ -5,7 +5,9 @@
 
 {% block content %}
 
-<table class="table">
+<div class="container-fluid">
+<div class="row">
+    <table class="table">
     <thead>
         <tr>
             <th>id</th>
@@ -21,7 +23,7 @@
 
 
             {% for aa in item  %}
-            <td scope="row">{{aa.id}}</td>
+            <td scope="row">{{aa.user}}</td>
             <td>{{aa.name}} </td>
             <td>{{aa.weight}} </td>
         </tr>
@@ -30,5 +32,10 @@
 
     </tbody>
 </table>
+</div>
+<div class="row"></div>
+<div class="row"></div>
+</div>
+
 
 {% endblock content %}
