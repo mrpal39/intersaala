@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+{% csrf_token %}
+
+{% block content %}
+<article class="media content-section">
+  <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" height="10px" width="10px">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+      <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+      {% if object.author == user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+      </div>
+      {% endif %}
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">{{ object.title }}</h1>
+        <p class="display-4">{{ object.body }}</p>
+
+        <a href="">
+          <img src="{{ object.image}}" alt="" srcset=""> click
+
+        </a>
+
+
+
+      </div>
+    </div>
+
+  </div>
+</article>
+
+
+
+
+<!-- {{ form|crispy }} -->
+
+<h1>
+
+
+  footer</h1>
+
+{% endblock content %}

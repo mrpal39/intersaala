@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% for a in std  %}
+  {{a.name}}
+{% endfor %}
+
+{% endblock content %}

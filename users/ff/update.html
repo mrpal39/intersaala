@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class='container-fluid col-4'>
+    <form method="post" action='#' id='stu'>
+
+        <div class="form-group">
+
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="fname" placeholder="Enter your First Name" name="fname"
+                required>
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" id="lname" placeholder="Enter your Last Name" name="lname" required>
+            <label for="email">Your Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your Email" name="email" required>
+            <label for="uname">Addres</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter your Name" name="address" required>
+        </div>
+        {% csrf_token %}
+
+        <button type="submit" id='submitbtn' class="btn btn-primary mt-2">update</button>
+    </form>
+</div>
+{% endblock content %}

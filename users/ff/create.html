@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class='container-fluid col-4'>
+    <form method="post" action='#' id='stu'>
+
+        <div class="form-group">
+
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="fname" placeholder="Enter your First Name" name="fname"
+                required>
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" id="lname" placeholder="Enter your Last Name" name="lname" required>
+            <label for="email">Your Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your Email" name="email" required>
+            <label for="uname">Addres</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter your Name" name="address" required>
+        </div>
+        {% csrf_token %}
+
+        <button type="submit" id='submitbtn' class="btn btn-primary mt-2">Submit</button>
+    </form>
+</div>
+
+<hr>
+<div class="container-fluid col-8">
+    <table class="table" id='stdid'>
+        <thead>
+            <tr><th>id</th>
+
+                <th>name</th>
+                <th>lastname</th>
+                <th>email</th>
+                <th>address</th>
+                <th>status</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in std %}
+
+            <tr>
+                <td scope="row">{{s.id}}</td>
+                    <td>{{s.name}}</td>
+                <td>{{s.last_name}}</td>
+                <td>{{s.email}}</td>
+                <td>{{s.address}}</td>
+                <td><a href="" class='btn btn-success' id='btnupdate' data-id="{{s.id}}" >update</a></td>
+                <td><a href="{% url 'delete' s.id %}"   class='btn btn-danger'>Delete</a></td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}
+{% block javascript %}
+<script src="{% static 'base.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        // alert("ok")
+        $('#stu').on('submit', function () {
+            var fname = $('#fname').val()
+            var lname = $('#lname').val()
+            var email = $('#email').val()
+            var address = $('#address').val()
+            // var  = $('#fname').val()
+
+            // alert(fname)
+            let csrftoken = '{{ csrf_token }}'
+
+            $.ajax({
+                type: "POST",
+
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+
+                url: "{%url 'student_list' %}",
+                data: {
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    address: address,
+                },
+                //    dataType: "dataType",
+                success: function (response) {
+                    console.log(response, typeof(response))
+                    var instance = JSON.parse(response["instance"]);
+                    var fields = instance[0]["fields"];
+
+                    $("#stdid tbody").prepend(
+                        `<tr>
+                    <td>${fields["name"]||""}</td>
+                    <td>${fields["last_name"]||""}</td>
+                    <td>${fields["email"]||""}</td>
+                    <td>${fields["address"]||""}</td>
+                    </tr>`
+                    )
+                }
+            });
+
+
+        });
+
+        
+        $('a#btnupdate').on('click',function (e) { 
+            e.preventDefault();
+            let id = $(this).attr('data-id');
+            let csrftoken = '{{ csrf_token }}'
+
+            alert(id)
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update'%}",
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {sid:id},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.name)
+                    // alert()
+                    $("#fname").val(data.name);
+                    $("#lname").val(data.lname);
+                    $("#email").val(data.email);
+                    $("#address").val(data.address);
+                    
+                }
+            });
+            
+        });
+
+
+
+
+
+    });
+</script>
+{% endblock javascript %}
